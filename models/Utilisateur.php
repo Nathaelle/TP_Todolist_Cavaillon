@@ -38,6 +38,12 @@ class Utilisateur {
         if(file_exists('datas/utilisateurs.json')) {
             $json = file_get_contents('datas/utilisateurs.json');
             $tab_user = json_decode($json);
+
+            foreach($tab_user as $user) {
+                if($user->pseudo === $this->pseudo) {
+                    return false;
+                }
+            }
         // Sinon, on crée juste un nouveau tableau vide
         } else {
             $tab_user = [];
