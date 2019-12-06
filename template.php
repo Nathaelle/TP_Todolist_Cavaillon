@@ -6,7 +6,7 @@
 </head>
 <body>
     <?php
-        require "views/membre.php";
+        require $view;
     ?>
 </body>
 </html>
