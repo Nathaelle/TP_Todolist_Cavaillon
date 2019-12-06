@@ -21,6 +21,8 @@ switch($route) {
     break;
     case 'connect_user': connect_user();
     break;
+    case 'deconnexion': deconnexion();
+    break;
     default : home();
 }
 
@@ -31,8 +33,12 @@ function home() {
 }
 
 function membre() {
-    global $view;
-    $view = 'views/membre.php';
+    if(isset($_SESSION['user'])) {
+        global $view;
+        $view = 'views/membre.php';
+    } else {
+        header("Location:index.php?route=home");
+    }
 }
 
 // Fonctionnalités de traitement, redirigées
@@ -61,7 +67,7 @@ function connect_user() {
 
     $utilisateur = new Utilisateur();
     $utilisateur->setPseudo($_POST['pseudo']);
-
+    
     $utilisateur->verify_user();
     if(password_verify($_POST['passwd'], $utilisateur->getPasswd())) {
         // Dans ce cas on est connecté, on place donc l'utilisateur en session
@@ -71,7 +77,12 @@ function connect_user() {
     } else {
         header("Location:index.php?route=home");
     }
+}
 
+function deconnexion() {
+    $_SESSION = array();
+    session_destroy();
+    header("Location:index.php?route=home");
 }
 
 

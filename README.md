@@ -9,9 +9,10 @@ Syntaxe : `/index.php?route=qquechose`
 Et seront récupérées par notre index (point d'entrée), dans `$_REQUEST['route']`
 
 Liste des fonctionnalités appellées :
-- Afficher la page d'accueil : route=home
-- Afficher l'espace membre : route=membre
-- Insérer un nouvel utilisateur (action du formulaire) : route=insert_user
-- ...
+- Afficher la page d'accueil : route=home (affichage)
+- Afficher l'espace membre : route=membre (affichage)
+- Insérer un nouvel utilisateur (action du formulaire) : route=insert_user (redirection vers affichage)
+- Se connecter : route=connect_user (redirection vers affichage)
+- Se déconnecter : route=deconnexion (redirection vers affichage)
 
 Ou chaque valeur possible, pour ce paramètre (route) est définie dans une structure de contrôle : notre ROUTEUR (switch)

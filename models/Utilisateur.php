@@ -74,7 +74,7 @@ class Utilisateur {
 
     public function verify_user(): self {
 
-        // Si le fichier existe déjà, on récupère son contenu, et on décode le format json
+        // Si le fichier existe, on récupère son contenu, et on décode le format json
         if(file_exists('datas/utilisateurs.json')) {
             $json = file_get_contents('datas/utilisateurs.json');
             $tab_user = json_decode($json);
