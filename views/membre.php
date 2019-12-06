@@ -1,7 +1,7 @@
 <h1>Mes choses à faire</h1>
 <p><a href="index.php?route=deconnexion">Me déconnecter</a></p>
 <h2>Ajouter une tache</h2>
-<form action="index.php?route=" method="POST">
+<form action="index.php?route=insert_tache" method="POST">
     <div>
         <input type="text" name="description" placeholder="Entrez votre chose à faire">
     </div>

@@ -14,5 +14,6 @@ Liste des fonctionnalités appellées :
 - Insérer un nouvel utilisateur (action du formulaire) : route=insert_user (redirection vers affichage)
 - Se connecter : route=connect_user (redirection vers affichage)
 - Se déconnecter : route=deconnexion (redirection vers affichage)
+- Ajouter une tache : route=insert_tache (redirection vers affichage)
 
 Ou chaque valeur possible, pour ce paramètre (route) est définie dans une structure de contrôle : notre ROUTEUR (switch)

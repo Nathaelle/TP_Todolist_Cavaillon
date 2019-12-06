@@ -23,6 +23,8 @@ switch($route) {
     break;
     case 'deconnexion': deconnexion();
     break;
+    case 'insert_tache' : insert_tache();
+    break;
     default : home();
 }
 
@@ -71,7 +73,8 @@ function connect_user() {
     $utilisateur->verify_user();
     if(password_verify($_POST['passwd'], $utilisateur->getPasswd())) {
         // Dans ce cas on est connecté, on place donc l'utilisateur en session
-        $_SESSION['user'] = $utilisateur;
+        $_SESSION['user']['idUtilisateur'] = $utilisateur->getIdUtilisateur();
+        $_SESSION['user']['pseudo'] = $utilisateur->getPseudo();
         // Et on le redirige sur son espace
         header("Location:index.php?route=membre");
     } else {
@@ -85,7 +88,15 @@ function deconnexion() {
     header("Location:index.php?route=home");
 }
 
+function insert_tache() {
 
+    $tache = new Tache();
+    $tache->setDescription($_POST['description']);
+    $tache->setDeadline($_POST['date_limite']);
+    $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
+
+    $tache->save_tache();
+}
 
 
 
