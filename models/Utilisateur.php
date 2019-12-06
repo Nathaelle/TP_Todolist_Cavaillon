@@ -31,4 +31,34 @@ class Utilisateur {
     public function setPasswd(string $passwd) {
         $this->passwd = $passwd;
     }
+
+    public function save_user(): bool {
+
+        // Si le fichier existe déjà, on récupère son contenu, et on décode le format json
+        if(file_exists('datas/utilisateurs.json')) {
+            $json = file_get_contents('datas/utilisateurs.json');
+            $tab_user = json_decode($json);
+        // Sinon, on crée juste un nouveau tableau vide
+        } else {
+            $tab_user = [];
+        }
+
+        // Ensuite, on "calcule" l'identifiant du nouvel utilisateur
+        $this->idUtilisateur = sizeof($tab_user) + 1;
+
+        // Puis on insère toutes les données de cet utilisateur dans le tableau récupéré
+        array_push($tab_user, [
+            'idUtilisateur' => $this->idUtilisateur,
+            'pseudo' => $this->pseudo,
+            'passwd' => $this->passwd
+            ]);
+
+        // Et enfin, on réécrit dans le fichier, en ayant pris soin de réencoder nos données
+        $saved = fopen('datas/utilisateurs.json', 'w');
+        fwrite($saved, json_encode($tab_user));
+        fclose($saved);
+
+        //var_dump($this);
+        return false;
+    }
 }

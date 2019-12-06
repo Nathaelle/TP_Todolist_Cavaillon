@@ -46,10 +46,11 @@ function insert_user() {
             $utilisateur->setPseudo($_POST['pseudo']);
             $utilisateur->setPasswd(password_hash($_POST['passwd'], PASSWORD_DEFAULT));
 
-            var_dump($utilisateur);
-
+            $utilisateur->save_user();
         }
     }
+    
+    header("Location:index.php?route=home");
     
 }
 
