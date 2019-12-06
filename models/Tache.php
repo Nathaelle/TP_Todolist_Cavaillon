@@ -7,6 +7,8 @@ class Tache {
     private $deadline;
     private $idUtilisateur;
 
+    public function __construct() {}
+
     public function getIdTache(): int {
         return $this->idTache;
     }

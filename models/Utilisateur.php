@@ -6,6 +6,8 @@ class Utilisateur {
     private $pseudo;
     private $passwd;
 
+    public function __construct() {}
+
     public function getIdUtilisateur(): int {
         return $this->idUtilisateur;
     }
