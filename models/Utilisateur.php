@@ -6,7 +6,11 @@ class Utilisateur {
     private $pseudo;
     private $passwd;
 
-    public function __construct() {}
+    public function __construct() {
+        $this->idUtilisateur = -1;
+        $this->pseudo = '';
+        $this->passwd = '';
+    }
 
     public function getIdUtilisateur(): int {
         return $this->idUtilisateur;
@@ -66,5 +70,22 @@ class Utilisateur {
 
         //var_dump($this);
         return false;
+    }
+
+    public function verify_user(): self {
+
+        // Si le fichier existe déjà, on récupère son contenu, et on décode le format json
+        if(file_exists('datas/utilisateurs.json')) {
+            $json = file_get_contents('datas/utilisateurs.json');
+            $tab_user = json_decode($json);
+
+            foreach($tab_user as $user) {
+                if($user->pseudo === $this->pseudo) {
+                    $this->passwd = $user->passwd;
+                    $this->idUtilisateur = $user->idUtilisateur;
+                }
+            }
+        } 
+        return $this;
     }
 }

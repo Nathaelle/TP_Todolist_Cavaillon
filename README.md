@@ -1,6 +1,6 @@
 ## Sommaire des routes
 
-Il s'agit de définir de manière EXHAUSTIVE toutes les routes, c'est à dire, tous les appels à telle ou telle fonctionnalité (que ce soit de l'affichage, ou de la gestion des données, ou autre calcum etc...)
+Il s'agit de définir de manière EXHAUSTIVE toutes les routes, c'est à dire, tous les appels à telle ou telle fonctionnalité (que ce soit de l'affichage, ou de la gestion des données, ou autre calcul etc...)
 
 Nos routes seront appellées via la transmission d'un paramètre spécial dans notre requête, nous utiliserons la clé `route`
 
