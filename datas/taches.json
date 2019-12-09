@@ -1,1 +1,1 @@
-[{"idTache":1,"description":"Rien","deadline":"2019-12-06"},{"idTache":2,"description":"Etre en we","deadline":"2019-12-06"}]
+[{"idTache":1,"description":"Finir le Tp","deadline":"2019-12-09","idUtilisateur":3},{"idTache":2,"description":"autre chose","deadline":"2019-12-27","idUtilisateur":3},{"idTache":3,"description":"Et encore une autre chose","deadline":"2019-12-12","idUtilisateur":3},{"idTache":4,"description":"Une tache de Titi","deadline":"2020-01-03","idUtilisateur":1}]

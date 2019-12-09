@@ -55,12 +55,14 @@ class Tache {
 
         // Ensuite, on "calcule" l'identifiant de la nouvelle tache
         $this->idTache = sizeof($tab_tache) + 1;
+        $this->idUtilisateur = $_SESSION['user']['idUtilisateur'];
 
         // Puis on insère toutes les données de cet utilisateur dans le tableau récupéré
         array_push($tab_tache, [
             'idTache' => $this->idTache,
             'description' => $this->description,
-            'deadline' => $this->deadline
+            'deadline' => $this->deadline,
+            'idUtilisateur' => $this->idUtilisateur
             ]);
 
         // Et enfin, on réécrit dans le fichier, en ayant pris soin de réencoder nos données
@@ -68,8 +70,28 @@ class Tache {
         fwrite($saved, json_encode($tab_tache));
         fclose($saved);
 
-        //var_dump($this);
         return false;
+    }
 
+    public function select_tache_by_user(): array {
+
+        $user_taches = [];
+        // Si le fichier existe, on récupère son contenu, et on décode le format json
+        if(file_exists('datas/taches.json')) {
+            $json = file_get_contents('datas/taches.json');
+            $tab_taches = json_decode($json);
+
+            foreach($tab_taches as $tache) {
+                if($tache->idUtilisateur === $_SESSION['user']['idUtilisateur']) {
+                    $new = new Tache();
+                    $new->setIdTache($tache->idTache);
+                    $new->setDescription($tache->description);
+                    $new->setDeadline($tache->deadline);
+                    $new->setIdUtilisateur($tache->idUtilisateur);
+                    array_push($user_taches, $new);
+                }
+            }
+        } 
+        return $user_taches;
     }
 }

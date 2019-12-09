@@ -38,6 +38,9 @@ function membre() {
     if(isset($_SESSION['user'])) {
         global $view;
         $view = 'views/membre.php';
+        global $taches;
+        $taches = (new Tache())->select_tache_by_user();
+
     } else {
         header("Location:index.php?route=home");
     }
@@ -96,6 +99,7 @@ function insert_tache() {
     $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
 
     $tache->save_tache();
+    header("Location:index.php?route=membre");
 }
 
 

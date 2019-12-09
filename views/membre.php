@@ -19,14 +19,10 @@
         <th>A faire</th><th>Avant le</th>
     </tr>
 
-    <tr>
-        <td>Tache 1</td><td>06/12/2019</td>
-    </tr>
-    <tr>
-        <td>Tache 2</td><td>06/12/2019</td>
-    </tr>
-    <tr>
-        <td>Tache N</td><td>06/12/2019</td>
-    </tr>
+    <?php foreach($taches as $tache): ?>
+        <tr>
+            <td><?= $tache->getDescription() ?></td><td><?= $tache->getDeadline() ?></td>
+        </tr>
+    <?php endforeach; ?>
 
 </table>
