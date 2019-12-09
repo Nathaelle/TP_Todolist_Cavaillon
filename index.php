@@ -13,9 +13,9 @@ var_dump($_SESSION);
 $route = (isset($_REQUEST['route']))? $_REQUEST['route'] : 'home';
 
 switch($route) {
-    case 'home' : home();
+    case 'home' : home(); // affichage
     break;
-    case 'membre' : membre();
+    case 'membre' : membre(); // affichage
     break;
     case 'insert_user': insert_user();
     break;
@@ -36,11 +36,14 @@ function home() {
 
 function membre() {
     if(isset($_SESSION['user'])) {
+
         global $view;
         $view = 'views/membre.php';
-        global $taches;
-        $taches = (new Tache())->select_tache_by_user();
 
+        global $taches;
+        $tache = new Tache();
+        $taches = $tache->select_tache_by_user();
+        
     } else {
         header("Location:index.php?route=home");
     }
