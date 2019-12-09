@@ -1,3 +1,5 @@
+<?php var_dump($taches) ?>
+
 <h1>Mes choses à faire</h1>
 <p><a href="index.php?route=deconnexion">Me déconnecter</a></p>
 <h2>Ajouter une tache</h2>
@@ -21,7 +23,7 @@
 
     <?php foreach($taches as $tache): ?>
         <tr>
-            <td><?= $tache->getDescription() ?></td><td><?= $tache->getDeadline() ?></td>
+            <td><?= $tache->getDescription() ?></td><td><?= $tache->getDescription() ?></td>
         </tr>
     <?php endforeach; ?>
 

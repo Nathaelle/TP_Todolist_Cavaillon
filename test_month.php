@@ -29,38 +29,39 @@ $mois_courant = (int) $now->format('m');
 $jour_courant = (int) $now->format('d');
 
 // Exercice 3
-echo "Premier jour du mois :";
 $premier = $now->modify('first day of');
-var_dump($premier);
+//var_dump($premier);
 
 // Exercice 4
-echo "Premier lundi du mois :";
 $premier_lundi = $premier->modify('first monday of');
-var_dump($premier_lundi);
+//var_dump($premier_lundi);
 
 // Exercice 5
-echo "Premier jour mois suivant :";
 $premier_jour_mois_suivant = $premier->modify('+ 1 month');
-var_dump($premier_jour_mois_suivant);
+//var_dump($premier_jour_mois_suivant);
 
-echo "Dernier jour mois courant :";
 $dernier_jour_mois_courant = $premier->modify('+ 1 month - 1 day');
-var_dump($dernier_jour_mois_courant);
+//var_dump($dernier_jour_mois_courant);
 
-echo "Premier jour année suivante :";
 $premier_annee_suivante = $premier->modify('last day of December')->modify('+ 1 day');
 //$premier_annee_suivante = $premier->modify('first day of January')->modify('+ 1 year');
-var_dump($premier_annee_suivante);
+//var_dump($premier_annee_suivante);
 
-echo "Lundi précédent le premier jour du mois :";
 $lundi_precedent = ($premier_lundi->format('d') === '01')? $premier_lundi : $premier_lundi->modify('last monday');
-var_dump($lundi_precedent);
+//var_dump($lundi_precedent);
 
+
+//--------------------------------------------------------------------------------------
 // Calendrier - POO
+//--------------------------------------------------------------------------------------
+
 
 // Exercice 1 - 2 - 3 - 4
-$month = new Month($mois_courant, $annee_courante);
-echo "Nous sommes au mois de {$month->getMonthName()} {$month->getYear()}";
+$month = new Month(intval($_GET['month']) ?? $mois_courant, intval($_GET['year']) ?? $annee_courante);
 
+var_dump($month->getFirst());
+var_dump($month->getLast());
 
-require "views/calendrier.php";
+$view = "views/calendrier.php";
+
+require "template.php";
