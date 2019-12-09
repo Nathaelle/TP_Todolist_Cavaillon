@@ -75,23 +75,26 @@ class Tache {
 
     public function select_tache_by_user(): array {
 
-        $user_taches = [];
+        $taches_user = [];
         // Si le fichier existe, on récupère son contenu, et on décode le format json
         if(file_exists('datas/taches.json')) {
             $json = file_get_contents('datas/taches.json');
             $tab_taches = json_decode($json);
 
+            // Pour chaque élément du tableau récupéré, il s'agit de comparer l'identifiant de l'utilisateur connecté avec l'id utilsateur de la tache
             foreach($tab_taches as $tache) {
                 if($tache->idUtilisateur === $_SESSION['user']['idUtilisateur']) {
+                    // Dans ce cas, on insère notre tache dans le tableau des taches de l'utilisateur ($taches_user)
+                    // On reconstruit nos objets Tache pour pouvoir les utiliser pleinement par la suite
                     $new = new Tache();
                     $new->setIdTache($tache->idTache);
                     $new->setDescription($tache->description);
                     $new->setDeadline($tache->deadline);
                     $new->setIdUtilisateur($tache->idUtilisateur);
-                    array_push($user_taches, $new);
+                    array_push($taches_user, $new);
                 }
             }
         } 
-        return $user_taches;
+        return $taches_user;
     }
 }
