@@ -41,7 +41,7 @@ function membre() {
         $view = 'views/membre.php';
 
         global $taches;
-        $tache = new Tache();
+        $tache = new Models\Tache();
         $taches = $tache->select_tache_by_user();
         
     } else {
@@ -59,7 +59,7 @@ function insert_user() {
         if($_POST['passwd'] === $_POST['passwd2']) {
             
             // Dans ce cas, j'instancie un nouvel objet utilisateur, et lui renseigne ses propriétés
-            $utilisateur = new Utilisateur();
+            $utilisateur = new Models\Utilisateur();
             $utilisateur->setPseudo($_POST['pseudo']);
             $utilisateur->setPasswd(password_hash($_POST['passwd'], PASSWORD_DEFAULT));
 
@@ -73,7 +73,7 @@ function insert_user() {
 
 function connect_user() {
 
-    $utilisateur = new Utilisateur();
+    $utilisateur = new Models\Utilisateur();
     $utilisateur->setPseudo($_POST['pseudo']);
     
     $utilisateur->verify_user();
@@ -96,7 +96,7 @@ function deconnexion() {
 
 function insert_tache() {
 
-    $tache = new Tache();
+    $tache = new Models\Tache();
     $tache->setDescription($_POST['description']);
     $tache->setDeadline($_POST['date_limite']);
     $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);

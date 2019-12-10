@@ -1,3 +1,29 @@
+* {
+    color: darkslategray;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.nav-arrow {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -40px;
+    margin-bottom: 20px;
+}
+
+.left-arrow {
+    border-top : 10px solid transparent;
+    border-right : 20px solid darkslategray;
+    border-bottom : 10px solid transparent;
+}
+
+.right-arrow {
+    border-top : 10px solid transparent;
+    border-left : 20px solid darkslategray;
+    border-bottom : 10px solid transparent;
+}
+
 .table-calendrier, td {
     border: 1px solid lightgray;
     border-collapse: collapse;
@@ -20,8 +46,18 @@
 
 .current {
     font-weight: bold;
+    font-size: 2em;
+}
+
+.current-day {
+    font-weight: normal;
 }
 
 .out {
     color: lightgray;
+    font-size: 1.5em;
+}
+
+.out-day {
+    color: darkgray;
 }

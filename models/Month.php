@@ -1,5 +1,9 @@
 <?php 
 
+namespace Models;
+use \DateTimeImmutable;
+use \DateTimeZone;
+
 class Month {
 
     const MONTH_NAME_FR = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
@@ -40,7 +44,7 @@ class Month {
     }
 
     public function setFirst(int $num) {
-        $this->first = new DateTimeImmutable("{$this->year}-$num-01");
+        $this->first = new DateTimeImmutable("{$this->year}-$num-01", new DateTimeZone("europe/paris"));
     }
 
     public function getLast(): DateTimeImmutable {
