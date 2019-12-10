@@ -2,7 +2,8 @@
 
 class Month {
 
-    const MONTH_NAME_FR = [1 => "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+    const MONTH_NAME_FR = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+    const DAY_NAME_FR = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
     private $monthName;
     private $year;
@@ -23,7 +24,7 @@ class Month {
     }
 
     public function setMonthName(int $num) {
-        $this->monthName = Month::MONTH_NAME_FR[$num];
+        $this->monthName = Month::MONTH_NAME_FR[$num - 1];
     }
 
     public function getYear(): int {
@@ -50,6 +51,17 @@ class Month {
         $this->last = $this->first->modify('last day of');
     }
 
+    public function getNbWeeks(): int {
+        $first = (int) $this->first->format("W");
+        $last = (int) $this->last->format("W");
+        $last = ($last === 1 && (int) $this->last->format("m") === 12)? 53 : $last;
+        return $last - $first + 1;
+    }
+
+    public function getFirstMonday(): DateTimeImmutable {
+        $first_monday = $this->first->modify('first monday of');
+        return ((int) $first_monday->format('d') === 01)? $first_monday : $first_monday->modify('last monday');
+    }
 
 
 

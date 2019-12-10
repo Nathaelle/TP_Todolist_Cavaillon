@@ -57,10 +57,8 @@ $lundi_precedent = ($premier_lundi->format('d') === '01')? $premier_lundi : $pre
 
 
 // Exercice 1 - 2 - 3 - 4
-$month = new Month(intval($_GET['month']) ?? $mois_courant, intval($_GET['year']) ?? $annee_courante);
-
-var_dump($month->getFirst());
-var_dump($month->getLast());
+$month = new Month($_GET['month'] ?? $mois_courant, $_GET['year'] ?? $annee_courante);
+//var_dump($month->getFirstMonday());
 
 $view = "views/calendrier.php";
 
