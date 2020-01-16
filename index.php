@@ -7,7 +7,7 @@ require "conf/global.php";
 // Afficher le contenu d'une superglobale (à décommenter si besoin)
 //var_dump($_GET);
 //var_dump($_POST);
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 // On vérifie qu'une route est bien transmise en paramètre, si ce n'est pas le cas, on lui donne une valeur par défaut
 // pour éviter que ça "casse" à l'étape suivante
@@ -28,6 +28,8 @@ switch($route) {
     break;
     case 'delete_tache' : delete_tache();
     break;
+    case 'modif_tache' : modif_tache();
+    break;
     default : home();
 }
 
@@ -45,6 +47,12 @@ function membre() {
 
         global $taches;
         $tache = new Models\Tache();
+
+        if(isset($_REQUEST['tache'])) {
+            global $item;
+            $tache->setId($_REQUEST['tache']);
+            $item = $tache->select();
+        }
 
         $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
         $taches = $tache->selectByUser();
@@ -127,7 +135,18 @@ function delete_tache() {
     header("Location:index.php?route=membre");
 }
 
+function modif_tache() {
 
+    $tache = new Models\Tache();
+    $tache->setId($_POST['id_tache']);
+    $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
+    $tache->setDescription($_POST['description']);
+    $tache->setDeadline($_POST['date_limite']);
+
+    $tache->update();
+    
+    header("Location:index.php?route=membre");
+}
 
 
 // ----- AFFICHAGE -------

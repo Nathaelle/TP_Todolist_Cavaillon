@@ -61,3 +61,21 @@
 .out-day {
     color: darkgray;
 }
+
+/* Affichage liste tache */
+.tab-taches {
+    margin: auto;
+    width: 80%;
+}
+
+.tab-taches th {
+    text-align: left;
+}
+
+.tab-taches tr {
+    width: 100%;
+}
+
+.alert {
+    color: red;
+}

@@ -2,6 +2,8 @@
 
 namespace Models;
 use PDO;
+use DateTime;
+use DateTimeZone;
 
 class Tache extends DbConnect {
 
@@ -30,12 +32,12 @@ class Tache extends DbConnect {
         $this->creation = $create;
     }
 
-    public function getDeadline(): string {
+    public function getDeadline(): DateTime {
         return $this->deadline;
     }
 
     public function setDeadline(string $dead) {
-        $this->deadline = $dead;
+        $this->deadline = new DateTime($dead, new DateTimeZone('europe/paris'));
     }
 
     public function getIdUtilisateur(): int {
@@ -49,9 +51,10 @@ class Tache extends DbConnect {
 
     public function insert() {
 
+        $deadline = $this->deadline->format('Y-m-d H:i');
         // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
         $query = "INSERT INTO Tasks (`description`, `created_at`, `todo_at`, `id_user`)
-                    VALUES ('$this->description', NOW(), '$this->deadline', $this->idUtilisateur)";
+                    VALUES ('$this->description', NOW(), '$deadline', $this->idUtilisateur)";
         $result = $this->pdo->prepare($query);
         $result->execute();
 

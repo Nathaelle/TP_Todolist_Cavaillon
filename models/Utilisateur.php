@@ -85,8 +85,26 @@ class Utilisateur extends DbConnect {
         return $this;
     }
 
-    function delete(){}
-    function update(){}
+    function delete(){
+
+        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
+        $query = "DELETE FROM Users WHERE id_user = $this->id";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+    }
+
+    function update(){
+
+        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
+        $query = "UPDATE Users 
+                SET `nom` = '$this->nom', `prenom` = '$this->prenom', `email` = '$this->email', `pseudo` = '$this->pseudo'
+                WHERE id_user = $this->id";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+
+        return $this;
+    }
+
     function select(){}
     function selectAll(){}
 }
