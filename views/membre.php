@@ -1,4 +1,4 @@
-<?php var_dump($taches) ?>
+<?php  ?>
 
 <h1>Mes choses à faire</h1>
 <p><a href="index.php?route=deconnexion">Me déconnecter</a></p>
@@ -18,12 +18,12 @@
 
 <table>
     <tr>
-        <th>A faire</th><th>Avant le</th>
+        <th>A faire</th><th>Avant le</th><th></th>
     </tr>
 
     <?php foreach($taches as $tache): ?>
         <tr>
-            <td><?= $tache->getDescription() ?></td><td><?= $tache->getDescription() ?></td>
+            <td><?= $tache->getDescription() ?></td><td><?php $now = new DateTime($tache->getDeadline()); echo $now->format('d/m/Y') ?></td><td>X</td>
         </tr>
     <?php endforeach; ?>
 
