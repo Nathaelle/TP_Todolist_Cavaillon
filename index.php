@@ -26,6 +26,8 @@ switch($route) {
     break;
     case 'insert_tache' : insert_tache();
     break;
+    case 'delete_tache' : delete_tache();
+    break;
     default : home();
 }
 
@@ -43,6 +45,7 @@ function membre() {
 
         global $taches;
         $tache = new Models\Tache();
+
         $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
         $taches = $tache->selectByUser();
         
@@ -109,6 +112,17 @@ function insert_tache() {
     $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
 
     $tache->insert();
+    
+    header("Location:index.php?route=membre");
+}
+
+function delete_tache() {
+
+    $tache = new Models\Tache();
+    $tache->setId($_REQUEST['id_tache']);
+    $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
+
+    $tache->delete();
     
     header("Location:index.php?route=membre");
 }

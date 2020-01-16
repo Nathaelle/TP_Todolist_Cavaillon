@@ -84,4 +84,9 @@ class Utilisateur extends DbConnect {
 
         return $this;
     }
+
+    function delete(){}
+    function update(){}
+    function select(){}
+    function selectAll(){}
 }

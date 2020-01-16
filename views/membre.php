@@ -23,7 +23,7 @@
 
     <?php foreach($taches as $tache): ?>
         <tr>
-            <td><?= $tache->getDescription() ?></td><td><?php $now = new DateTime($tache->getDeadline()); echo $now->format('d/m/Y') ?></td><td>X</td>
+            <td><?= $tache->getDescription() ?></td><td><?php $now = new DateTime($tache->getDeadline()); echo $now->format('d/m/Y') ?></td><td><a href="index.php?route=delete_tache&id_tache=<?= $tache->getId() ?>">X</a></td>
         </tr>
     <?php endforeach; ?>
 
