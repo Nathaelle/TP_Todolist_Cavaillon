@@ -16,7 +16,7 @@ class Month {
 
     public function __construct(int $num, int $year) {
 
-        $num = (($num % 12) === 0)? 12 : $num % 12;
+        
         $this->setMonthName($num);
         $this->setYear($year);
         $this->setFirst($num);
@@ -28,7 +28,8 @@ class Month {
     }
 
     public function setMonthName(int $num) {
-        $this->monthName = Month::MONTH_NAME_FR[$num - 1];
+        $num = (($num % 12) === 0)? 12 : $num % 12;
+        $this->monthName = Month::MONTH_NAME_FR[abs($num) - 1];
     }
 
     public function getYear(): int {
@@ -36,7 +37,8 @@ class Month {
     }
 
     public function setYear(int $year) {
-        $this->year = $year;
+        $now = (int) (new DateTimeImmutable)->format("Y");
+        $this->year = ($year < $now - 10 || $year > $now + 10)? $now : $year ;
     }
 
     public function getFirst(): DateTimeImmutable {
@@ -44,6 +46,7 @@ class Month {
     }
 
     public function setFirst(int $num) {
+        $num = (($num % 12) === 0)? 12 : $num % 12;
         $this->first = new DateTimeImmutable("{$this->year}-$num-01", new DateTimeZone("europe/paris"));
     }
 
