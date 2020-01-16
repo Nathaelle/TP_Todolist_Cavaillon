@@ -55,56 +55,31 @@ class Utilisateur extends DbConnect {
         $this->email = $email;
     }
 
-    public function save_user(): bool {
+    public function insert() {
 
-        // Si le fichier existe déjà, on récupère son contenu, et on décode le format json
-        if(file_exists('datas/utilisateurs.json')) {
-            $json = file_get_contents('datas/utilisateurs.json');
-            $tab_user = json_decode($json);
+        $query = "INSERT INTO Users (`nom`, `prenom`, `email`, `pseudo`, `passwd`)
+                    VALUES('$this->nom', '$this->prenom', '$this->email', '$this->pseudo', '$this->passwd')";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
 
-            foreach($tab_user as $user) {
-                if($user->pseudo === $this->pseudo) {
-                    return false;
-                }
-            }
-        // Sinon, on crée juste un nouveau tableau vide
-        } else {
-            $tab_user = [];
-        }
+        $this->id = $this->pdo->lastInsertId();
+        return $this;
 
-        // Ensuite, on "calcule" l'identifiant du nouvel utilisateur
-        $this->idUtilisateur = sizeof($tab_user) + 1;
-
-        // Puis on insère toutes les données de cet utilisateur dans le tableau récupéré
-        array_push($tab_user, [
-            'idUtilisateur' => $this->idUtilisateur,
-            'pseudo' => $this->pseudo,
-            'passwd' => $this->passwd
-            ]);
-
-        // Et enfin, on réécrit dans le fichier, en ayant pris soin de réencoder nos données
-        $saved = fopen('datas/utilisateurs.json', 'w');
-        fwrite($saved, json_encode($tab_user));
-        fclose($saved);
-
-        //var_dump($this);
-        return false;
     }
 
     public function verify_user(): self {
 
-        // Si le fichier existe, on récupère son contenu, et on décode le format json
-        if(file_exists('datas/utilisateurs.json')) {
-            $json = file_get_contents('datas/utilisateurs.json');
-            $tab_user = json_decode($json);
+        $query = "SELECT id_user, passwd FROM Users WHERE pseudo = '$this->pseudo'";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
 
-            foreach($tab_user as $user) {
-                if($user->pseudo === $this->pseudo) {
-                    $this->passwd = $user->passwd;
-                    $this->idUtilisateur = $user->idUtilisateur;
-                }
-            }
-        } 
+        $data = $result->fetch(); //renvoie array ou false
+        
+        if ($data) {
+            $this->passwd = $data['passwd'];
+            $this->id = $data['id_user'];
+        }
+
         return $this;
     }
 }

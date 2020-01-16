@@ -3,7 +3,7 @@
 namespace Models;
 use PDO;
 
-class DbConnect {
+abstract class DbConnect implements Crud {
 
     protected $pdo;
     protected $id;
@@ -21,4 +21,5 @@ class DbConnect {
         return $this->id;
     }
 
+    abstract function insert();
 }

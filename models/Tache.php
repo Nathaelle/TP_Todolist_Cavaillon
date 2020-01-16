@@ -46,6 +46,8 @@ class Tache extends DbConnect {
         $this->idUtilisateur = $id;
     }
 
+    public function insert() {}
+
     public function save_tache() {
 
         // Si le fichier existe déjà, on récupère son contenu, et on décode le format json

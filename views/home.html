@@ -2,6 +2,15 @@
 <h2>Inscrivez-vous</h2>
 <form action="index.php?route=insert_user" method="POST">
     <div>
+        <input type="text" name="nom" placeholder="Entrez votre nom">
+    </div>
+    <div>
+        <input type="text" name="prenom" placeholder="Entrez votre prénom">
+    </div>
+    <div>
+        <input type="email" name="email" placeholder="Entrez votre adresse mail">
+    </div>
+    <div>
         <input type="text" name="pseudo" placeholder="Choisissez un pseudo">
     </div>
     <div>
@@ -14,6 +23,7 @@
 </form>
 <h2>Connectez-vous</h2>
 <form action="index.php?route=connect_user" method="POST">
+    
     <div>
         <input type="text" name="pseudo" placeholder="Entrez votre pseudo">
     </div>
