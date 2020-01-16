@@ -1,25 +1,18 @@
 <?php
 
 namespace Models;
+use PDO;
 
-class Utilisateur {
+class Utilisateur extends DbConnect {
 
-    private $idUtilisateur;
     private $pseudo;
     private $passwd;
+    private $nom;
+    private $prenom;
+    private $email;
 
-    public function __construct() {
-        $this->idUtilisateur = -1;
-        $this->pseudo = '';
-        $this->passwd = '';
-    }
-
-    public function getIdUtilisateur(): int {
-        return $this->idUtilisateur;
-    }
-
-    public function setIdUtilisateur(int $id) {
-        $this->IdUtilisateur = $id;
+    public function __construct($id = null) {
+        parent::__construct($id);
     }
 
     public function getPseudo(): string {
@@ -36,6 +29,30 @@ class Utilisateur {
 
     public function setPasswd(string $passwd) {
         $this->passwd = $passwd;
+    }
+
+    public function getNom(): string {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom) {
+        $this->nom = $nom;
+    }
+
+    public function getPrenom(): string {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom) {
+        $this->prenom = $prenom;
+    }
+
+    public function getEmail(): string {
+        return $this->email;
+    }
+
+    public function setEmail(string $email) {
+        $this->email = $email;
     }
 
     public function save_user(): bool {

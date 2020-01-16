@@ -1,22 +1,17 @@
 <?php
 
 namespace Models;
+use PDO;
 
-class Tache {
+class Tache extends DbConnect {
 
-    private $idTache;
     private $description;
+    private $creation;
     private $deadline;
     private $idUtilisateur;
 
-    public function __construct() {}
-
-    public function getIdTache(): int {
-        return $this->idTache;
-    }
-
-    public function setIdTache(int $id) {
-        $this->idTache = $id;
+    public function __construct(?int $id = null) {
+        parent::__construct($id);
     }
 
     public function getDescription(): string {
@@ -25,6 +20,14 @@ class Tache {
 
     public function setDescription(string $desc) {
         $this->description = $desc;
+    }
+
+    public function getCreation(): string {
+        return $this->creation;
+    }
+
+    public function setCreation(string $create) {
+        $this->creation = $create;
     }
 
     public function getDeadline(): string {
