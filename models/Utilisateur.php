@@ -57,6 +57,7 @@ class Utilisateur extends DbConnect {
 
     public function insert() {
 
+        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
         $query = "INSERT INTO Users (`nom`, `prenom`, `email`, `pseudo`, `passwd`)
                     VALUES('$this->nom', '$this->prenom', '$this->email', '$this->pseudo', '$this->passwd')";
         $result = $this->pdo->prepare($query);
@@ -69,6 +70,7 @@ class Utilisateur extends DbConnect {
 
     public function verify_user(): self {
 
+        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
         $query = "SELECT id_user, passwd FROM Users WHERE pseudo = '$this->pseudo'";
         $result = $this->pdo->prepare($query);
         $result->execute();

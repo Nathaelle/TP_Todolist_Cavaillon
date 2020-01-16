@@ -46,62 +46,41 @@ class Tache extends DbConnect {
         $this->idUtilisateur = $id;
     }
 
-    public function insert() {}
 
-    public function save_tache() {
+    public function insert() {
 
-        // Si le fichier existe déjà, on récupère son contenu, et on décode le format json
-        if(file_exists('datas/taches.json')) {
-            $json = file_get_contents('datas/taches.json');
-            $tab_tache = json_decode($json);
+        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
+        $query = "INSERT INTO Tasks (`description`, `created_at`, `todo_at`, `id_user`)
+                    VALUES ('$this->description', NOW(), '$this->deadline', $this->idUtilisateur)";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
 
-        // Sinon, on crée juste un nouveau tableau vide
-        } else {
-            $tab_tache = [];
-        }
-
-        // Ensuite, on "calcule" l'identifiant de la nouvelle tache
-        $this->idTache = sizeof($tab_tache) + 1;
-        $this->idUtilisateur = $_SESSION['user']['idUtilisateur'];
-
-        // Puis on insère toutes les données de cet utilisateur dans le tableau récupéré
-        array_push($tab_tache, [
-            'idTache' => $this->idTache,
-            'description' => $this->description,
-            'deadline' => $this->deadline,
-            'idUtilisateur' => $this->idUtilisateur
-            ]);
-
-        // Et enfin, on réécrit dans le fichier, en ayant pris soin de réencoder nos données
-        $saved = fopen('datas/taches.json', 'w');
-        fwrite($saved, json_encode($tab_tache));
-        fclose($saved);
-
-        return false;
+        $this->id = $this->pdo->lastInsertId();
+        return $this;
     }
 
-    public function select_tache_by_user(): array {
 
-        $taches_user = [];
-        // Si le fichier existe, on récupère son contenu, et on décode le format json
-        if(file_exists('datas/taches.json')) {
-            $json = file_get_contents('datas/taches.json');
-            $tab_taches = json_decode($json);
+    public function selectByUser() {
 
-            // Pour chaque élément du tableau récupéré, il s'agit de comparer l'identifiant de l'utilisateur connecté avec l'id utilsateur de la tache
-            foreach($tab_taches as $tache) {
-                if($tache->idUtilisateur === $_SESSION['user']['idUtilisateur']) {
-                    // Dans ce cas, on insère notre tache dans le tableau des taches de l'utilisateur ($taches_user)
-                    // On reconstruit nos objets Tache pour pouvoir les utiliser pleinement par la suite
-                    $new = new Tache();
-                    $new->setIdTache($tache->idTache);
-                    $new->setDescription($tache->description);
-                    $new->setDeadline($tache->deadline);
-                    $new->setIdUtilisateur($tache->idUtilisateur);
-                    array_push($taches_user, $new);
-                }
+        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
+        $query = "SELECT `id_task`, `description`, `created_at`, `todo_at` FROM Tasks WHERE id_user = $this->idUtilisateur";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+
+        $datas = $result->fetchAll();
+
+        $tab = [];
+        if($datas) {
+            foreach($datas as $data) {
+                $new = new Tache();
+                $new->setId($data['id_task']);
+                $new->setDescription($data['description']);
+                $new->setCreation($data['created_at']);
+                $new->setDeadline($data['todo_at']);
+                array_push($tab, $new);
             }
-        } 
-        return $taches_user;
+        }
+
+        return $tab;
     }
 }

@@ -43,7 +43,8 @@ function membre() {
 
         global $taches;
         $tache = new Models\Tache();
-        $taches = $tache->select_tache_by_user();
+        $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
+        $taches = $tache->selectByUser();
         
     } else {
         header("Location:index.php?route=home");
@@ -52,8 +53,6 @@ function membre() {
 
 // Fonctionnalités de traitement, redirigées
 function insert_user() {
-
-    var_dump($_POST);
 
     // Première verif : Si les "champs" du formulaire ont tous bien été renseignés
     if(!empty($_POST['pseudo']) && !empty($_POST['passwd']) && !empty($_POST['passwd2'])) {
@@ -109,7 +108,8 @@ function insert_tache() {
     $tache->setDeadline($_POST['date_limite']);
     $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
 
-    $tache->save_tache();
+    $tache->insert();
+    
     header("Location:index.php?route=membre");
 }
 
