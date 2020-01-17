@@ -57,10 +57,14 @@ class Utilisateur extends DbConnect {
 
     public function insert() {
 
-        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
         $query = "INSERT INTO Users (`nom`, `prenom`, `email`, `pseudo`, `passwd`)
-                    VALUES('$this->nom', '$this->prenom', '$this->email', '$this->pseudo', '$this->passwd')";
+                    VALUES(:nom, :prenom, :email, :pseudo, :passwd)";
         $result = $this->pdo->prepare($query);
+        $result->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+        $result->bindValue(':prenom', $this->prenom, PDO::PARAM_STR);
+        $result->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $result->bindValue(':pseudo', $this->pseudo, PDO::PARAM_STR);
+        $result->bindValue(':passwd', $this->passwd, PDO::PARAM_STR);
         $result->execute();
 
         $this->id = $this->pdo->lastInsertId();
@@ -70,9 +74,9 @@ class Utilisateur extends DbConnect {
 
     public function verify_user(): self {
 
-        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
-        $query = "SELECT id_user, passwd FROM Users WHERE pseudo = '$this->pseudo'";
+        $query = "SELECT id_user, passwd FROM Users WHERE pseudo = :pseudo";
         $result = $this->pdo->prepare($query);
+        $result->bindValue(':pseudo', $this->pseudo, PDO::PARAM_STR);
         $result->execute();
 
         $data = $result->fetch(); //renvoie array ou false
@@ -87,24 +91,68 @@ class Utilisateur extends DbConnect {
 
     function delete(){
 
-        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
-        $query = "DELETE FROM Users WHERE id_user = $this->id";
+        $query = "DELETE FROM Users WHERE id_user = :id";
         $result = $this->pdo->prepare($query);
+        $result->bindValue(':id', $this->id, PDO::PARAM_INT);
         $result->execute();
     }
 
     function update(){
 
-        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
         $query = "UPDATE Users 
-                SET `nom` = '$this->nom', `prenom` = '$this->prenom', `email` = '$this->email', `pseudo` = '$this->pseudo'
+                SET `nom` = :nom, `prenom` = :prenom, `email` = :email, `pseudo` = :pseudo
                 WHERE id_user = $this->id";
         $result = $this->pdo->prepare($query);
+        $result->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+        $result->bindValue(':prenom', $this->prenom, PDO::PARAM_STR);
+        $result->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $result->bindValue(':pseudo', $this->pseudo, PDO::PARAM_STR);
         $result->execute();
 
         return $this;
     }
 
-    function select(){}
-    function selectAll(){}
+    function select(){
+
+        $query = "SELECT `nom`, `prenom`, `email`, `pseudo`, `passwd` FROM Users 
+                WHERE id_user = :id";
+        $result = $this->pdo->prepare($query);
+        $result->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $result->execute();
+        $data = $result->fetch();
+
+        if($data) {
+            $this->setNom($data['nom']);
+            $this->setPrenom($data['prenom']);
+            $this->setEmail($data['email']);
+            $this->setPseudo($data['pseudo']);
+            $this->setPasswd($data['passwd']);
+        }
+        return $this;
+
+    }
+    function selectAll(){
+
+        $query = "SELECT `id_user`, `nom`, `prenom`, `email`, `pseudo`, `passwd` FROM Users";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+        $datas = $result->fetchAll();
+        
+        $tab = [];
+        if($datas) {
+            foreach($datas as $data) {
+                $new = new Utilisateur();
+                $new->setId($data['id_user']);
+                $new->setNom($data['nom']);
+                $new->setPrenom($data['prenom']);
+                $new->setEmail($data['email']);
+                $new->setPseudo($data['pseudo']);
+                $new->setPasswd($data['passwd']);
+                array_push($tab, $new);
+            }
+        }
+
+        return $tab;
+
+    }
 }

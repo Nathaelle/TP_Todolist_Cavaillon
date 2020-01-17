@@ -93,7 +93,7 @@ function connect_user() {
         // Et on le redirige sur son espace
         header("Location:index.php?route=membre");
     } else {
-        //header("Location:index.php?route=home");
+        header("Location:index.php?route=home");
     }
 }
 

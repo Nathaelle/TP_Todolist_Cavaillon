@@ -52,10 +52,13 @@ class Tache extends DbConnect {
     public function insert() {
 
         $deadline = $this->deadline->format('Y-m-d H:i');
-        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
+
         $query = "INSERT INTO Tasks (`description`, `created_at`, `todo_at`, `id_user`)
-                    VALUES ('$this->description', NOW(), '$deadline', $this->idUtilisateur)";
+                    VALUES (:description, NOW(), :deadline, :user)";
         $result = $this->pdo->prepare($query);
+        $result->bindValue('description', $this->description, PDO::PARAM_STR);
+        $result->bindValue('deadline', $this->deadline, PDO::PARAM_STR);
+        $result->bindValue('user', $this->idUtilisateur, PDO::PARAM_INT);
         $result->execute();
 
         $this->id = $this->pdo->lastInsertId();
@@ -65,9 +68,9 @@ class Tache extends DbConnect {
 
     public function selectByUser() {
 
-        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
-        $query = "SELECT `id_task`, `description`, `created_at`, `todo_at` FROM Tasks WHERE id_user = $this->idUtilisateur";
+        $query = "SELECT `id_task`, `description`, `created_at`, `todo_at` FROM Tasks WHERE id_user = :user";
         $result = $this->pdo->prepare($query);
+        $result->bindValue('user', $this->idUtilisateur, PDO::PARAM_INT);
         $result->execute();
 
         $datas = $result->fetchAll();
@@ -91,20 +94,26 @@ class Tache extends DbConnect {
     function delete(){
 
         // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
-        $query = "DELETE FROM Tasks WHERE id_task = $this->id AND id_user = $this->idUtilisateur";
+        $query = "DELETE FROM Tasks WHERE id_task = :id AND id_user = :user";
         $result = $this->pdo->prepare($query);
+        $result->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $result->bindValue(':user', $this->idUtilisateur, PDO::PARAM_INT);
         $result->execute();
 
     }
 
-    function update(){
+    function update(): ?self {
 
         $deadline = $this->deadline->format('Y-m-d H:i');
-        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
+
         $query = "UPDATE Tasks 
-                SET `description` = '$this->description', `todo_at` = '$deadline'
-                WHERE id_task = $this->id AND id_user = $this->idUtilisateur";
+                SET `description` = :description, `todo_at` = :deadline
+                WHERE id_task = :id AND id_user = :user";
         $result = $this->pdo->prepare($query);
+        $result->bindValue(':description', $this->description, PDO::PARAM_STR);
+        $result->bindValue(':deadline', $deadline, PDO::PARAM_STR);
+        $result->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $result->bindValue(':user', $this->idUtilisateur, PDO::PARAM_INT);
         $result->execute();
 
         return $this;
@@ -112,10 +121,10 @@ class Tache extends DbConnect {
 
     function select(){
 
-        // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
         $query = "SELECT `description`, `created_at`, `todo_at`, `id_user` FROM Tasks 
-                WHERE id_task = $this->id";
+                WHERE id_task = :id";
         $result = $this->pdo->prepare($query);
+        $result->bindValue(':id', $this->id, PDO::PARAM_INT);
         $result->execute();
         $data = $result->fetch();
 
