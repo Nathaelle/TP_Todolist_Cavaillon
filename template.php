@@ -7,7 +7,7 @@
 </head>
 <body>
     <?php
-        require $view;
+        require $view['view'];
     ?>
 </body>
 </html>

@@ -1,4 +1,8 @@
-<?php  ?>
+<?php 
+// Adaptateur pour éviter de devoir modifier le template (et ne pas rallonger le nom des variables)
+$taches = $view['datas']['taches'];
+$item = (isset($view['datas']['item'])? $view['datas']['item'] : null);
+?>
 
 <h1>Mes choses à faire</h1>
 <p><a href="index.php?route=deconnexion">Me déconnecter</a></p>

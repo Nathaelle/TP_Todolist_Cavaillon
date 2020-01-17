@@ -13,53 +13,44 @@ require "conf/global.php";
 // pour éviter que ça "casse" à l'étape suivante
 $route = (isset($_REQUEST['route']))? $_REQUEST['route'] : 'home';
 
-switch($route) {
-    case 'home' : home(); // affichage
-    break;
-    case 'membre' : membre(); // affichage
-    break;
-    case 'insert_user': insert_user();
-    break;
-    case 'connect_user': connect_user();
-    break;
-    case 'deconnexion': deconnexion();
-    break;
-    case 'insert_tache' : insert_tache();
-    break;
-    case 'delete_tache' : delete_tache();
-    break;
-    case 'modif_tache' : modif_tache();
-    break;
-    default : home();
+try {
+    $view = $route();
+} catch(Error $e) {
+    $view = home();
 }
 
 // Fonctionnalités d'affichage
 function home() {
-    global $view;
-    $view = 'views/home.html';
+    return ['view' => 'views/home.html'];
 }
 
 function membre() {
+  
     if(isset($_SESSION['user'])) {
 
-        global $view;
-        $view = 'views/membre.php';
-
-        global $taches;
         $tache = new Models\Tache();
-
-        if(isset($_REQUEST['tache'])) {
-            global $item;
-            $tache->setId($_REQUEST['tache']);
-            $item = $tache->select();
-        }
-        
         $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
         $taches = $tache->selectByUser();
+
+        if(isset($_REQUEST['tache'])) {
+            
+            $tache->setId($_REQUEST['tache']);
+            $item = $tache->select();
+
+            return ['view' => 'views/membre.php', 'datas' => [
+                'taches' => $taches,
+                'item' => $item
+            ]];
+        }
         
     } else {
         header("Location:index.php?route=home");
     }
+
+    return ['view' => 'views/membre.php', 'datas' => [
+        'taches' => $taches
+    ]];
+
 }
 
 // Fonctionnalités de traitement, redirigées
