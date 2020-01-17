@@ -53,7 +53,7 @@ function membre() {
             $tache->setId($_REQUEST['tache']);
             $item = $tache->select();
         }
-
+        
         $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
         $taches = $tache->selectByUser();
         

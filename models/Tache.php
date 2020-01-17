@@ -99,9 +99,10 @@ class Tache extends DbConnect {
 
     function update(){
 
+        $deadline = $this->deadline->format('Y-m-d H:i');
         // !!!!!!!!! Requête à modifier ultérieurement voir cours sécurité !!!!!!!!!!!
         $query = "UPDATE Tasks 
-                SET `description` = '$this->description', `todo_at` = '$this->deadline'
+                SET `description` = '$this->description', `todo_at` = '$deadline'
                 WHERE id_task = $this->id AND id_user = $this->idUtilisateur";
         $result = $this->pdo->prepare($query);
         $result->execute();
