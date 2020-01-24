@@ -1,0 +1,16 @@
+# <----- Ceci est un commentaire
+#activer le module Apache pour la réécriture d'url :
+
+RewriteEngine On
+
+# index.php sera accessible à l'adresse index.html
+RewriteRule ^index\.html$ index.php [L]
+
+# index.php?route=xxxx sera accessible à l'adresse xxxx.html
+RewriteRule ^(\w*)\.html$ index.php?route=$1 [L]
+# nimportekoi.html -> index.php?route=nimportekoi
+# membre.html -> index.php?route=membre
+# home.html -> index.php?route=home
+
+# index.php?route=xxxx&tache=N sera accessible à l'adresse xxxx-N.html
+RewriteRule ^(\w*)-(\d*)\.html$ index.php?route=$1&tache=$2 [L]

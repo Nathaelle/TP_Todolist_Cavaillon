@@ -5,18 +5,18 @@ $item = (isset($view['datas']['item'])? $view['datas']['item'] : null);
 ?>
 
 <h1>Mes choses à faire</h1>
-<p><a href="index.php?route=deconnexion">Me déconnecter</a></p>
+<p><a href="deconnexion.html">Me déconnecter</a></p>
 <h2>Ajouter une tache</h2>
-<form action="index.php?route=<?= (isset($item))? 'modif_tache' : 'insert_tache' ?>" method="POST">
+<form action="<?= (isset($item))? 'modif_tache' : 'insert_tache' ?>.html" method="POST">
     <div>
-        <input type="text" name="description" placeholder="Entrez votre chose à faire" value="<?= (isset($item))? $item->getDescription(): '' ?>">
+        <input type="text" name="description" placeholder="Entrez votre chose à faire" value="<?= (isset($item))? htmlspecialchars($item->getDescription()): '' ?>">
     </div>
     <div>
         <label for="date_limite">Deadline</label>
-        <input type="date" name="date_limite" id="date_limite" value="<?= (isset($item))? $item->getDeadline()->format("Y-m-d"): '' ?>">
+        <input type="date" name="date_limite" id="date_limite" value="<?= (isset($item))? htmlspecialchars($item->getDeadline()->format("Y-m-d")): '' ?>">
    
-        <input type="hidden" name="id_tache" value="<?= (isset($item))? $item->getId() : '' ?>">
-        <input type="submit" value="<?= (isset($item))? 'Modifier' : 'Ajouter' ?>"> <?= (isset($item))? '<br><a href="index.php?route=membre">Nouvelle tache</a>' : '' ?>
+        <input type="hidden" name="id_tache" value="<?= (isset($item))? htmlspecialchars($item->getId()) : '' ?>">
+        <input type="submit" value="<?= (isset($item))? 'Modifier' : 'Ajouter' ?>"> <?= (isset($item))? '<br><a href="membre.html">Nouvelle tache</a>' : '' ?>
     </div>
 </form>
 
@@ -27,9 +27,9 @@ $item = (isset($view['datas']['item'])? $view['datas']['item'] : null);
 
     <?php foreach($taches as $tache): ?>
         <tr>
-            <td><?= $tache->getDescription() ?></td>
-            <td><?= $tache->getDeadline()->format('d/m/Y') ?></td>
-            <td><a href="index.php?route=membre&tache=<?= $tache->getId() ?>">Modifier</a> | <a class="alert" href="index.php?route=delete_tache&id_tache=<?= $tache->getId() ?>">Supprimer</a></td>
+            <td><?= htmlspecialchars($tache->getDescription()) ?></td>
+            <td><?= htmlspecialchars($tache->getDeadline()->format('d/m/Y')) ?></td>
+            <td><a href="membre-<?= htmlspecialchars($tache->getId()) ?>.html">Modifier</a> | <a class="alert" href="delete_tache-<?= htmlspecialchars($tache->getId()) ?>.html">Supprimer</a></td>
         </tr>
     <?php endforeach; ?>
 

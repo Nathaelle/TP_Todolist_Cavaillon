@@ -48,6 +48,10 @@ class Tache extends DbConnect {
         $this->idUtilisateur = $id;
     }
 
+    public function getVars() {
+        return get_object_vars($this);
+    }
+
 
     public function insert() {
 
