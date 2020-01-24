@@ -57,7 +57,7 @@ class Tache extends DbConnect {
                     VALUES (:description, NOW(), :deadline, :user)";
         $result = $this->pdo->prepare($query);
         $result->bindValue('description', $this->description, PDO::PARAM_STR);
-        $result->bindValue('deadline', $this->deadline, PDO::PARAM_STR);
+        $result->bindValue('deadline', $deadline, PDO::PARAM_STR);
         $result->bindValue('user', $this->idUtilisateur, PDO::PARAM_INT);
         $result->execute();
 
