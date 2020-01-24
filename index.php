@@ -13,11 +13,15 @@ require "conf/global.php";
 // pour éviter que ça "casse" à l'étape suivante
 $route = (isset($_REQUEST['route']))? $_REQUEST['route'] : 'home';
 
+$router = new Controllers\Router($route);
+$controller = $router->getController();
+//$view = $controller->getView();
+/*
 try {
     $view = $route();
 } catch(Error $e) {
     $view = home();
-}
+}*/
 
 // Fonctionnalités d'affichage
 function home() {
