@@ -6,13 +6,11 @@ class Home {
 
     private $view;
 
-    function __construct() {
-
+    function init() {
         $this->view = $this->index();
     }
 
     function index() {
-
 
         return $this->view = ['view' => 'views/home.html'];
 

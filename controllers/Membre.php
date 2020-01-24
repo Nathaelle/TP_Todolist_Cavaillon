@@ -9,7 +9,14 @@ class Membre {
 
     function __construct() {
 
-        $this->view = $this->index();
+    }
+
+    function init() {
+        if(isset($_REQUEST['tache'])) {
+            $this->view = $this->indexWithTask();
+        } else {
+            $this->view = $this->index();
+        }
     }
 
     function index() {
@@ -27,6 +34,27 @@ class Membre {
             'taches' => $taches
         ]];
 
+    }
+
+    function indexWithTask() {
+
+        if(!isset($_SESSION['user'])) {
+            header("Location:index.php?route=home");
+        }
+
+        $tache = new Tache();
+        $tache->setIdUtilisateur($_SESSION['user']['idUtilisateur']);
+        $taches = $tache->selectByUser();
+
+        $tache->setId($_REQUEST['tache']);
+        $item = $tache->select();
+
+        $_SESSION['token']['tache'] = mkToken($item->getId());
+
+        return ['view' => 'views/membre.php', 'datas' => [
+            'taches' => $taches,
+            'item' => $item
+        ]];
     }
 
     function getView() {

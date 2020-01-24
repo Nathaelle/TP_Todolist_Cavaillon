@@ -9,11 +9,12 @@ class Router {
 
     function __construct(string $route) {
 
-        $name = $this->format($route);
+        $name = '\Controllers\\'.$this->format($route);
+        var_dump($name);
         try {
             $this->controller = new $name();
         } catch (Error $e) {
-            //$this->controller = new Home();
+            $this->controller = new Home();
         }
     }
 
